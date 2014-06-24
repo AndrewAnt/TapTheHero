@@ -5,7 +5,7 @@
 	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
 	<false/>
 	<key>IDESourceControlProjectIdentifier</key>
-	<string>59E80075-0B1E-4D8C-9EB9-161632A03237</string>
+	<string>A014F2BC-C047-4FE9-B6AD-0810562BC1D0</string>
 	<key>IDESourceControlProjectName</key>
 	<string>TapTheHero</string>
 	<key>IDESourceControlProjectOriginsDictionary</key>
@@ -20,8 +20,13 @@
 		<key>0B33B323-3BF9-47F2-BC72-7182C33BE586</key>
 		<string>../../../..</string>
 	</dict>
+	<key>IDESourceControlProjectRepositoryRootDictionary</key>
+	<dict>
+		<key>0B33B323-3BF9-47F2-BC72-7182C33BE586</key>
+		<string>https://github.com/AndrewAnt/TapTheHero.git</string>
+	</dict>
 	<key>IDESourceControlProjectURL</key>
-	<string>https://github.com/AndrewAnt/TapTheHero.git</string>
+	<string>https://github.com/AndrewAnt/TapTheHero.git/trunk/src/TapTheHero.xcodeproj</string>
 	<key>IDESourceControlProjectVersion</key>
 	<integer>110</integer>
 	<key>IDESourceControlProjectWCCIdentifier</key>
@@ -29,8 +34,12 @@
 	<key>IDESourceControlProjectWCConfigurations</key>
 	<array>
 		<dict>
+			<key>IDESourceControlRepositoryBranchesRelativeLocationKey</key>
+			<string>branches</string>
 			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
-			<string>public.vcs.git</string>
+			<string>public.vcs.subversion</string>
+			<key>IDESourceControlRepositoryTrunkRelativeLocationKey</key>
+			<string>trunk</string>
 			<key>IDESourceControlWCCIdentifierKey</key>
 			<string>0B33B323-3BF9-47F2-BC72-7182C33BE586</string>
 			<key>IDESourceControlWCCName</key>
