@@ -66,8 +66,8 @@
     SPImage *background = [[SPImage alloc] initWithContentsOfFile:@"background.jpg"];
     [_contents addChild:background];
     
-    NSString *text = @"To find out how to create your own game out of this scaffold, "
-                     @"have a look at the 'First Steps' section of the Sparrow website!";
+    NSString *text = @"TAP\n"
+                     @"the HERO";
     
     // If we need standart UI
     // UIView *view = Sparrow.currentController.view;
@@ -80,7 +80,7 @@
     SPImage *image = [[SPImage alloc] initWithTexture:[Media atlasTexture:@"sparrow"]];
     image.pivotX = (int)image.width  / 2;
     image.pivotY = (int)image.height / 2;
-    image.x = background.width  / 2;
+    image.x = background.width  / 2 + 70;
     image.y = background.height / 2 + 40;
     [_contents addChild:image];
     
