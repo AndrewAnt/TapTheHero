@@ -69,6 +69,9 @@
     NSString *text = @"To find out how to create your own game out of this scaffold, "
                      @"have a look at the 'First Steps' section of the Sparrow website!";
     
+    // If we need standart UI
+    // UIView *view = Sparrow.currentController.view;
+    
     SPTextField *textField = [[SPTextField alloc] initWithWidth:280 height:80 text:text];
     textField.x = (background.width - textField.width) / 2;
     textField.y = (background.height / 2) - 135;
