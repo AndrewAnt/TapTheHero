@@ -3,7 +3,7 @@
 //  AppScaffold
 //
 
-#import "Game.h" 
+#import "Game.h"
 
 // --- private interface ---------------------------------------------------------------------------
 
@@ -11,6 +11,7 @@
 
 - (void)setup;
 - (void)onImageTouched:(SPTouchEvent *)event;
+- (void)setString: (NSString *) aString;
 - (void)onResize:(SPResizeEvent *)event;
 
 @end
@@ -21,6 +22,10 @@
 @implementation Game
 {
     SPSprite *_contents;
+    NSTimer *timer;
+    float globalTime;
+    SPTextField *resultField;
+    
 }
 
 - (id)init
@@ -66,23 +71,44 @@
     SPImage *background = [[SPImage alloc] initWithContentsOfFile:@"background.jpg"];
     [_contents addChild:background];
     
-    NSString *text = @"TAP\n"
+    SPButton *button = [SPButton buttonWithUpState:[SPTexture textureWithContentsOfFile:@"button_1.png"]];
+    button.scaleX = button.scaleY = .25;
+    button.pivotX = button.width * .5;
+    button.pivotY = button.height * .5;
+    button.x = background.width * .5;
+    button.y = background.height - 50;
+    [_contents addChild:button];
+    
+    NSString *gogogo = @"GO!";
+    
+    SPTextField *goField = [[SPTextField alloc] initWithText:gogogo];
+    goField.fontSize = 46;
+    goField.x = (button.width - goField.height) * .5;
+    goField.y = (button.height - goField.height) * .5;
+    [button addChild:goField];
+    
+    [button addEventListener:@selector(onButtonPress:) atObject:self forType:SP_EVENT_TYPE_TOUCH];
+    
+    /*NSString *text = @"TAP\n"
                      @"the HERO";
     
     // If we need standart UI
     // UIView *view = Sparrow.currentController.view;
     
+    
+    
     SPTextField *textField = [[SPTextField alloc] initWithWidth:280 height:80 text:text];
     textField.x = (background.width - textField.width) / 2;
     textField.y = (background.height / 2) - 135;
-    [_contents addChild:textField];
+    [_contents addChild:textField];*/
 
     SPImage *image = [[SPImage alloc] initWithTexture:[Media atlasTexture:@"sparrow"]];
     image.pivotX = (int)image.width  / 2;
     image.pivotY = (int)image.height / 2;
-    image.x = background.width  / 2 + 70;
-    image.y = background.height / 2 + 40;
+    image.x = background.width  / 2 + 60;
+    image.y = background.height / 2 ;
     [_contents addChild:image];
+    
     
     [self updateLocations];
     
@@ -97,8 +123,8 @@
     tween.reverse = YES;
     [Sparrow.juggler addObject:tween];
     
-
-    // The controller autorotates the game to all supported device orientations. 
+    
+    // The controller autorotates the game to all supported device orientations.
     // Choose the orienations you want to support in the Xcode Target Settings ("Summary"-tab).
     // To update the game content accordingly, listen to the "RESIZE" event; it is dispatched
     // to all game elements (just like an ENTER_FRAME event).
@@ -117,6 +143,69 @@
     //   * iPhone/iPad -> Universal App  
     // 
     // Sparrow's minimum deployment target is iOS 5.
+    
+}
+
+- (void)onButtonPress:(SPTouchEvent *)event
+{
+    [timer invalidate];
+    
+    NSLog(@"Result = %f", globalTime*1000);
+    
+    
+    [self showResult];
+    
+    globalTime = 0.0;
+}
+
+-(void)onTick:(NSTimer *)timer {
+    globalTime += 0.01;
+    NSLog(@"Tick");
+}
+
+- (void)showResult
+{
+        
+    if (globalTime != 0.0)
+    {
+        [_contents removeChild:resultField];
+        
+        NSString *result = [NSString stringWithFormat:@"%.1f", globalTime * 1000];
+        
+        resultField = [[SPTextField alloc] initWithText:result];
+        
+        resultField.x = (_contents.width  - resultField.width) *.5;
+        resultField.y = _contents.height  / 2 + 30;
+        resultField.color = 0x00a008;
+        resultField.fontSize = 16;
+        
+        [_contents addChild:resultField];
+    }
+}
+
+- (void)setString: (NSString *)aString
+{
+    //int roll = 1 + rand() % 10;
+    
+    NSString *startText = aString;
+    
+    //NSLog(@"Roll = %i", roll);
+    
+    SPTextField *startTextField = [[SPTextField alloc] initWithText:startText];
+    startTextField.x = 130;
+    startTextField.y = 60;
+    startTextField.color = 0x50a048;
+    
+    [_contents addChild:startTextField];
+}
+
+-(void)startTimer
+{
+    timer = [NSTimer scheduledTimerWithTimeInterval: 0.01
+                                             target: self
+                                           selector: @selector(onTick:)
+                                           userInfo: nil
+                                            repeats: YES];
 }
 
 - (void)updateLocations
@@ -132,6 +221,9 @@
 {
     NSSet *touches = [event touchesWithTarget:self andPhase:SPTouchPhaseEnded];
     if ([touches anyObject]) [Media playSound:@"sound.caf"];
+    if (touches.count == 1) [self startTimer];
+    
+    [self setString: @"START!"];
 }
 
 - (void)onResize:(SPResizeEvent *)event
